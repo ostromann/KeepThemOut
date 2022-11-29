@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=2]
+
+[sub_resource type="Shader" id=2144]
+code = "shader_type canvas_item;
+
+uniform vec2 center;
+uniform float force;
+
+void fragment() {
+	vec2 disp = normalize(UV - center) * force;
+	COLOR = vec4(UV - disp, 0.0, 1.0);
+//	vec2 distortedUV = SCREEN_UV + texture(TEXTURE, UV).a * 0.1;
+//	vec4 screenColor = texture(SCREEN_TEXTURE, distortedUV);
+//	COLOR = screenColor;
+
+}"
+
+[sub_resource type="ShaderMaterial" id=2147]
+shader = SubResource( 2144 )
+shader_param/center = Vector2( 0.5, 0.5 )
+shader_param/force = null
+
+[sub_resource type="Gradient" id=2146]
+interpolation_mode = 1
+offsets = PoolRealArray( 0, 0.396648, 0.502793, 0.631285 )
+colors = PoolColorArray( 1, 1, 1, 0, 0.670588, 0.670588, 0.670588, 0, 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture2D" id=2148]
+gradient = SubResource( 2146 )
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2( 0.5, 0.5 )
+
+[node name="Shockwave" type="Sprite"]
+material = SubResource( 2147 )
+texture = SubResource( 2148 )
